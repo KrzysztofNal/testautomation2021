@@ -1,5 +1,7 @@
 package pl.tmobile.prepaid.java;
 
+import java.util.Objects;
+
 public class Telephone {
 
 //  private String serialNumber = "4654sdfsdf";
@@ -45,8 +47,8 @@ public class Telephone {
 //  }
 
 
-//  public Telephone() {
-//  }
+  public Telephone() {
+  }
 
   public Telephone(
       String serialNumber,
@@ -82,12 +84,21 @@ public class Telephone {
   }
 
 
-//  public Telephone(String serialNumber, short corner, Short cornerObject) {
-//    this.serialNumber = serialNumber;
-//    this.corner = corner;
-//    this.cornerObject = cornerObject;
-//  }
+  public Telephone(String serialNumber, short corner, Short cornerObject) {
+    this.serialNumber = serialNumber;
+    this.corner = corner;
+    this.cornerObject = cornerObject;
+  }
 
+  public Telephone(short corner, long pixel, Double wideObject) {
+    this.corner = corner;
+    this.pixel = pixel;
+    this.wideObject = wideObject;
+  }
+
+  public Telephone(int area) {
+    this.area = area;
+  }
 
   public short getCorner() {
     return corner;
@@ -145,6 +156,19 @@ public class Telephone {
     return signature;
   }
 
+  public String toStringMethode() {
+    return "toString";
+  }
+
+  public void toStringVoid() {
+    System.out.println("toString");
+  }
+
+  //nie używać
+  public void setArea(int area) {
+    this.area = area;
+  }
+
   @Override
   public String toString() {
     return "Telephone{" +
@@ -165,4 +189,84 @@ public class Telephone {
         ", signature=" + signature +
         '}';
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Telephone)) {
+      return false;
+    }
+
+    Telephone telephone = (Telephone) o;
+    return corner == telephone.corner && area == telephone.area && pixel == telephone.pixel
+        && Float.compare(telephone.length, length) == 0 && Double.compare(telephone.wide, wide) == 0
+        && removableCover == telephone.removableCover && buttonsNumber == telephone.buttonsNumber && signature == telephone.signature
+        && Objects.equals(serialNumber, telephone.serialNumber) && Objects.equals(cornerObject, telephone.cornerObject)
+        && Objects.equals(areaObject, telephone.areaObject) && Objects.equals(pixelObject, telephone.pixelObject)
+        && Objects.equals(lengthObject, telephone.lengthObject) && Objects.equals(wideObject, telephone.wideObject)
+        && Objects.equals(removableCoverObject, telephone.removableCoverObject);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(serialNumber, corner, cornerObject, area, areaObject, pixel, pixelObject, length, lengthObject, wide, wideObject,
+        removableCover, removableCoverObject, buttonsNumber, signature);
+  }
+
+  public int mergeTwoValue(int a, int b) {
+    a += 2;
+    System.out.println("a inside mergeTwoValue = " + a);
+    return a + b;
+  }
+
+  public int mergeTwoValueObject(Telephone telephone, int b) {
+    telephone.setArea(19);  // nie używać setterów
+    return telephone.getArea() + b;
+  }
+
+  public int add(int a, int b) {
+    return a + b;
+  }
+
+  public int minus(int a, int b) {
+    return a - b;
+  }
+
+  public int divide(int a, int b) {
+
+    if (b == 0) {
+      System.out.println("if with return 99999");
+      return 999999999;
+    }
+
+    if (a > 20) {
+      a = 20;
+      System.out.println("if with condition a > 20");
+    }
+
+    if (b < 2) {
+      b = 2;
+      System.out.println("if with condition b < 2");
+    }
+
+    if ( (a > 15) && (b < 10) ) {
+      a = 100;
+      b = 50;
+      System.out.println("if with condition (a > 15) && (b < 10)");
+    }
+
+    if ( (a > 17) || (b < 9) ){
+
+      a = 200;
+      b = 80;
+
+      System.out.println("if with condition (a > 10) || (b < 10)");
+    }
+
+    return a / b;
+  }
+
+
 }
