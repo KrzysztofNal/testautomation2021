@@ -1,14 +1,136 @@
 package pl.tmobile.prepaid.java;
 
-import java.math.BigInteger;
-import java.util.Locale;
-import pl.tmobile.prepaid.java.Telephone;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Month;
+import pl.tmobile.prepaid.java.main.Calc;
+import pl.tmobile.prepaid.java.main.Calc2;
+import pl.tmobile.prepaid.java.main.Calc3;
+import pl.tmobile.prepaid.java.main.CalculatorInt;
+import pl.tmobile.prepaid.java.main.TelephoneNokia;
 import pl.tmobile.prepaid.java.main.TelephoneSamsung;
+import pl.tmobile.prepaid.java.module.StringMessage;
 
 public class TrainingMain {
 
   public static void main(String[] args) {
 
+//    zad1();
+
+//    ifologia();
+
+    System.out.println("--------------------------------");
+//    int i = 1;
+
+    Calculator calculator = new Calculator(25, 5);
+//    calculator.nested();
+//    calculator.whileLoop();
+//    calculator.doWhileLoop();
+//    loops(calculator);
+//    extendsAndInterface();
+
+    LocalDate localDate = LocalDate.of(2015, 02, 20);
+    System.out.println(localDate.toString());
+    localDate = LocalDate.parse("2015-02-20");
+    System.out.println(localDate.toString());
+    localDate = LocalDate.of(2015, Month.JANUARY, 20);
+    System.out.println(localDate.toString());
+    localDate = LocalDate.now();
+    System.out.println(localDate.toString());
+
+    LocalTime localTime = LocalTime.of(23, 59,59);
+    System.out.println(localTime);
+    localTime = LocalTime.parse("23:59:59");
+    System.out.println(localTime);
+    localTime = LocalTime.now();
+    System.out.println(localTime);
+
+  }
+
+  private static void extendsAndInterface() {
+    System.out.println(StringMessage.FINAL_MESSAGE);
+    System.out.println(StringMessage.FINAL_MESSAGE_2);
+
+    System.out.println(StringMessage.staticMethod("extra text"));
+
+    TelephoneSamsung telephoneSamsung = new TelephoneSamsung();
+
+    CalculatorInt calculat = new Calc();
+    CalculatorInt calculat2 = new Calc2();
+    CalculatorInt calculat3 = new Calc3();
+
+    System.out.println(calculat.calculate("calc 1"));
+    System.out.println(calculat2.calculate("calc 2"));
+    System.out.println(calculat3.calculate("calc 3"));
+
+    CalculatorInt[] calculators = {calculat, calculat2, calculat3};
+
+    for (CalculatorInt calc : calculators) {
+      System.out.println(calc.calculate("mess"));
+    }
+
+    Telephone[] telephones = {new TelephoneSamsung(), new TelephoneNokia()};
+  }
+
+  private static void loops(Calculator calculator) {
+    int[] table = {1,2,5,3,6,9,9,9};
+    table = new int[5];
+    System.out.println("table[2] =" + table[2]);
+//    table = new int[]{1,2,3,4,5,6};
+    table[0] = 56;
+    table[1] = 89;
+
+    for (int i = 1; i < table.length ; i++) {
+      System.out.println(table[i]);
+    }
+
+    final String ania = new String("Ania");
+    String[] stringTable = {"Ania", "Ola", "Kasia", "Ola", ania, ania};
+
+    stringTable[1] = "Dorota";
+
+    String[][] multiTable = {{"Ania", "kasia"}, {"Ola", "Dorota", "Basia"}};
+
+    for (int i = 0; i < multiTable.length; i++) {
+      System.out.println("i: " + i);
+      for (int j = 0; j < multiTable[i].length; j++) {
+        System.out.println("j: " + j);
+      }
+      System.out.println();
+    }
+
+    for (int i : table) {
+      System.out.println(i);
+    }
+
+    calculator.met(1, "message", "Kasia", "Basia", "Ola");
+  }
+
+  private static void ifologia() {
+    Calculator calculator = new Calculator(25, 5);
+
+    int result = calculator.calculate("+");
+    System.out.println(result);
+    result = calculator.calculate("-");
+    System.out.println(result);
+
+    result = calculator.calculate("*");
+    System.out.println(result);
+
+    result = calculator.calculate("/");
+    System.out.println(result);
+
+    Calculator calculator2 = new Calculator(25, 0);
+    System.out.println(calculator2.calculate("/"));
+
+    System.out.println(calculator2.divide());
+
+    System.out.println("--------------------------------");
+    System.out.println(calculator.calculating("+"));
+//    System.out.println(calculator.calculating("t"));
+  }
+
+  private static void zad1() {
     int jakasZmienna = 15;
     System.out.println(jakasZmienna);
 
@@ -75,7 +197,6 @@ public class TrainingMain {
     System.out.println(telephone3.getButtonsNumber());
     System.out.println(telephone3.getSignature());
 
-
 //    telephone3.serialNumber = "zmiana";
 //
 //    TelephoneSamsung telephoneSamsung = new TelephoneSamsung();
@@ -107,7 +228,6 @@ public class TrainingMain {
     System.out.println(telephone5.getButtonsNumber());
     System.out.println(telephone5.getSignature());
 
-
     String toString = telephone5.toStringMethode();
     System.out.println(toString);
 
@@ -135,7 +255,6 @@ public class TrainingMain {
     );
 
     System.out.println(telephone3.equals(telephone4));
-
 
     String zmienna1 = "zmienna";
     String zmienna2 = "zmienna";
@@ -168,7 +287,6 @@ public class TrainingMain {
     String zmienna5a = zmienna5.toLowerCase();
     System.out.println(zmienna5a);
 
-
     int a = 5;
     int b = 5;
 
@@ -200,7 +318,6 @@ public class TrainingMain {
     System.out.println("a + 6 = " + a * 6);
     System.out.println("(2 * 6) + (5 * 3) =" +  (2 * 6) + (5 * 3) );
 
-
     Telephone telephone = new Telephone();
     System.out.println("a = " + a);
     int j = telephone.mergeTwoValue(a , e);
@@ -217,7 +334,6 @@ public class TrainingMain {
 
     System.out.println(telephone4.getArea());
 
-
     int k = 26;
     int l = 5;
     int m = k % l;
@@ -225,7 +341,6 @@ public class TrainingMain {
 
     int n = telephone.divide(k , l);
     System.out.println("n = " + n);
-
 
     System.out.println(telephone.divide(a, 0));
     System.out.println(telephone.divide(a, 1));
@@ -260,7 +375,7 @@ public class TrainingMain {
     System.out.println("--------------------------");
     System.out.println(telephone.divide(15, 8));
 
-
+    System.out.println("------------------------------------");
   }
 
 
