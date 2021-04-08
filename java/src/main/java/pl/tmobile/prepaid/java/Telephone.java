@@ -2,7 +2,7 @@ package pl.tmobile.prepaid.java;
 
 import java.util.Objects;
 
-public class Telephone {
+public class Telephone implements Comparable {
 
 //  private String serialNumber = "4654sdfsdf";
   private String serialNumber;
@@ -269,4 +269,8 @@ public class Telephone {
   }
 
 
+  @Override
+  public int compareTo(Object o) {
+    return 0;
+  }
 }

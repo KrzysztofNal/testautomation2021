@@ -1,12 +1,30 @@
 package pl.tmobile.prepaid.java;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+import pl.tmobile.prepaid.java.enums.Status;
+import pl.tmobile.prepaid.java.enums.TelephoneEnum;
 import pl.tmobile.prepaid.java.main.Calc;
 import pl.tmobile.prepaid.java.main.Calc2;
 import pl.tmobile.prepaid.java.main.Calc3;
 import pl.tmobile.prepaid.java.main.CalculatorInt;
+import pl.tmobile.prepaid.java.main.TelephoneMotorolla;
 import pl.tmobile.prepaid.java.main.TelephoneNokia;
 import pl.tmobile.prepaid.java.main.TelephoneSamsung;
 import pl.tmobile.prepaid.java.module.StringMessage;
@@ -28,23 +46,275 @@ public class TrainingMain {
 //    calculator.doWhileLoop();
 //    loops(calculator);
 //    extendsAndInterface();
+//    dates();
+//    enums();
 
+//    collection();
+
+
+  }
+
+  private static void collection() {
+    int[] inty = {1,2,5,9,4,5};
+
+    List<Integer> intList = new ArrayList<>();
+    int ia = 5;
+
+    Integer ii = Integer.valueOf(6);
+    intList.add(1);
+    intList.add(ia);
+    intList.add(ia);
+    intList.add(ia);
+    intList.add(ia);
+    intList.add(ii);
+    intList.add(ii);
+    intList.add(ii);
+    intList.add(ii);
+    intList.add(5);
+    intList.add(49);
+    intList.add(1268);
+    intList.add(1268);
+    intList.add(698);
+    intList.add(6);
+    intList.add(-569);
+//    intList.add(null);
+//    intList.add(null);
+//    intList.add(null);
+//    intList.add(null);
+
+    System.out.println(intList);
+
+    List<Integer> intlist2 = new ArrayList<>();
+    intlist2.add(5);
+    intlist2.add(49);
+    intlist2.add(1268);
+    intlist2.add(698);
+
+    System.out.println(intList.containsAll(intlist2));
+    System.out.println(intList.contains(2));
+    System.out.println(intList.get(0));
+    System.out.println(intList.get(1));
+    System.out.println(intList.get(intList.size() - 1));
+    System.out.println(intList.remove(Integer.valueOf(1268)));
+    System.out.println(intList.remove(6));
+    System.out.println(intList);
+
+    System.out.println("---------------------------------------------");
+
+    Set<Integer> intHashSet = new HashSet<>();
+
+    intHashSet.add(6);
+    intHashSet.add(6);
+    intHashSet.add(6);
+    intHashSet.add(156);
+    intHashSet.add(156);
+    intHashSet.add(16);
+    intHashSet.add(16);
+    intHashSet.add(1);
+//    intHashSet.add(null);
+
+    System.out.println(intHashSet);
+
+    Set<Integer> intTreeSet = new TreeSet<>();
+
+    intTreeSet.add(6);
+    intTreeSet.add(6);
+    intTreeSet.add(6);
+    intTreeSet.add(156);
+    intTreeSet.add(156);
+    intTreeSet.add(16);
+    intTreeSet.add(16);
+    intTreeSet.add(1);
+//    intTreeSet.add(null);
+
+    System.out.println(intTreeSet);
+
+//    Set<Telephone> telephones = new HashSet<>();
+    Set<Telephone> telephones = new TreeSet<>();
+    telephones.add(new Telephone());
+    telephones.add(new Telephone());
+    telephones.add(new Telephone());
+    telephones.add(new Telephone());
+    telephones.add(new Telephone());
+
+    System.out.println(telephones);
+
+    intTreeSet.addAll(intList);
+
+    System.out.println(intTreeSet);
+
+    intTreeSet.forEach(in -> {
+      if (in < 100) {
+        System.out.println(in);
+      }
+    });
+
+    System.out.println("-----------------------------------------");
+    List<Telephone> telephoneList = new ArrayList<>();
+    telephoneList.add(new Telephone());
+    telephoneList.add(new TelephoneMotorolla());
+    telephoneList.add(new TelephoneNokia());
+    telephoneList.add(new TelephoneSamsung());
+
+//    System.out.println(telephoneList);
+
+    telephoneList.forEach(tel -> {
+      if  (tel instanceof TelephoneNokia) {
+        System.out.println();
+      }
+    });
+
+    for (int iab = 0; iab < telephoneList.size() -1; iab++){
+      telephoneList.get(iab);
+    }
+
+    System.out.println("-----------------------------------------");
+    Map<String, String> mapy = new HashMap<>();
+
+    mapy.put("Name", "Ola");
+    mapy.put("Name", "Kasia");
+    mapy.put("Surname", "Kowalska");
+    System.out.println(mapy);
+
+    mapy.forEach((key, value) -> {
+      System.out.println(key);
+      System.out.println(value);
+    });
+    System.out.println("-----------------------------------------");
+
+    Map<TelephoneEnum, List<Telephone>> telephonesMap = new HashMap<>();
+
+    List<Telephone> motorallas = new ArrayList<>();
+
+    motorallas.add(new TelephoneMotorolla());
+    motorallas.add(new TelephoneMotorolla());
+    motorallas.add(new TelephoneMotorolla());
+    motorallas.add(new TelephoneMotorolla());
+
+    List<Telephone> nokias = new ArrayList<>();
+
+    nokias.add(new TelephoneNokia());
+    nokias.add(new TelephoneNokia());
+    nokias.add(new TelephoneNokia());
+    nokias.add(new TelephoneNokia());
+
+    telephonesMap.put(TelephoneEnum.MOTOROLLA, motorallas);
+    telephonesMap.put(TelephoneEnum.NOKIA, nokias);
+
+    System.out.println(telephonesMap);
+
+    telephonesMap.forEach((key, value) -> {
+      System.out.println(key);
+      value.forEach(System.out::println);
+    });
+
+    System.out.println(telephonesMap.get(TelephoneEnum.NOKIA));
+
+    System.out.println("-----------------------------------------------");
+
+    long count = telephoneList.stream()
+        .filter(tele -> tele instanceof TelephoneNokia)
+        .count();
+    System.out.println(count);
+
+    List<Double> wides = telephoneList.stream()
+        .map(telephone -> telephone.getWide())
+        .collect(Collectors.toList());
+
+    System.out.println(wides);
+
+    Optional<Double> doubleOptional = telephoneList.stream()
+        .map(telephone -> telephone.getWide())
+        .filter(tele -> tele.equals(8.65))
+        .findFirst();
+
+    if (doubleOptional == null ) {
+
+    }
+
+    Double doubleOptional_2 = telephoneList.stream()
+        .map(telephone -> telephone.getWide())
+        .filter(tele -> tele.equals(8.65))
+        .findFirst().get();
+  }
+
+  private static void enums() {
+    status(Status.ACTIVE);
+
+    Telephone telephone = getTelephone(TelephoneEnum.MOTOROLLA);
+    System.out.println(telephone);
+  }
+
+  public static Telephone getTelephone(TelephoneEnum telephoneEnum) {
+    switch (telephoneEnum) {
+      case SAMSUNG:
+        return new TelephoneSamsung();
+      case NOKIA:
+        return new TelephoneNokia();
+      case MOTOROLLA:
+        return new TelephoneMotorolla();
+      default:
+        return new Telephone();
+    }
+  }
+
+  public static void status(Status status) {
+    switch (status) {
+      case ACTIVE:
+        System.out.println("Status = " + status.getFunction());
+        break;
+      case STATE:
+        System.out.println("Status = " + status.getFunction());
+        break;
+      case DELETE:
+        System.out.println("Status = " + status.getFunction());
+        break;
+      default: System.out.println("Status brak");
+    }
+  }
+
+  private static void dates() {
     LocalDate localDate = LocalDate.of(2015, 02, 20);
     System.out.println(localDate.toString());
     localDate = LocalDate.parse("2015-02-20");
     System.out.println(localDate.toString());
     localDate = LocalDate.of(2015, Month.JANUARY, 20);
     System.out.println(localDate.toString());
-    localDate = LocalDate.now();
+    localDate = LocalDate.now().minusWeeks(1);
     System.out.println(localDate.toString());
 
     LocalTime localTime = LocalTime.of(23, 59,59);
     System.out.println(localTime);
     localTime = LocalTime.parse("23:59:59");
     System.out.println(localTime);
-    localTime = LocalTime.now();
+    localTime = LocalTime.now().plusHours(3);
     System.out.println(localTime);
 
+    LocalDateTime localDateTime = LocalDateTime.of(2015, 02, 20, 23, 59,59);
+    System.out.println(localDateTime.toString().replace("T", "  "));
+    LocalDateTime localDateTime2 = LocalDateTime.parse("2012-02-01T05:30:00");
+    System.out.println(localDateTime2);
+
+    Date date = new Date();
+    System.out.println(date.getDate());
+
+    ZoneId zoneId = ZoneId.of("Europe/Paris");
+    ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.now(), zoneId);
+    System.out.println(zonedDateTime);
+    LocalTime initialTime = LocalTime.of(6, 30, 0);
+    LocalTime lastTime = initialTime.plus(Duration.ofHours(5));
+    System.out.println(Duration.between(initialTime, lastTime).getSeconds());
+
+    LocalDate localDate1 = LocalDate.now();
+
+    System.out.println(localDate1);
+
+    String localFormat = localDate1.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+    System.out.println(localFormat);
+    localFormat = localDate1.format(DateTimeFormatter.ofPattern("yyyy/dd/MM"));
+    System.out.println(localFormat);
+    localFormat = localDate1.format(DateTimeFormatter.ofPattern("dd_MM_yy"));
+    System.out.println(localFormat);
   }
 
   private static void extendsAndInterface() {
