@@ -1,0 +1,71 @@
+package prepaidqa.qajunit;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.stream.Stream;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+@DisplayName("Parameterized tests")
+public class FirstParameterizedTest {
+
+  @DisplayName("Parameterized test value for modulo.")
+  @ParameterizedTest(name = "Parameter test with value: {0}.")
+  @ValueSource(ints = {5, 15, 25})
+  public void paramTest(int param) {
+    assertTrue(param % 5 == 0);
+  }
+
+  @DisplayName("Parameterized test value for Strings.")
+  @ParameterizedTest(name = "Parameter test with string value: {0}.")
+  @ValueSource(strings = {"Hello", "Hello junit", "Hello students"})
+  public void paramTest(String param) {
+    assertThat(param).contains("Hello");
+//    assertTrue(param.contains("Hello"));
+  }
+
+  @DisplayName("Param test with multi params.")
+  @ParameterizedTest(name = "Parameterized test for multi param: {0} and {1}")
+  @CsvSource(value = {"Hello ; 5", "Hello junit; 15", " Hello, students ; 25"}, delimiter = ';')
+  public void multiParamTest(String stringParam, int intParam) {
+    assertThat(stringParam).contains("Hello");
+    assertThat(intParam % 5).isEqualTo(0);
+  }
+
+  @DisplayName("Param test with params from file.")
+  @ParameterizedTest(name = "Param test for multi param: {0}, {1}")
+  @CsvFileSource(resources = "/params.txt", delimiter = ';')
+  public void multiCsvParamTest(String stringParam, int intParam) {
+    assertThat(stringParam).contains("Hello");
+    assertThat(intParam % 5).isEqualTo(0);
+  }
+
+  @DisplayName("Enum test")
+  @ParameterizedTest(name = "Enum Param test: {0}")
+  @EnumSource(names = {"A", "AA", "AAA"})
+  public void enumTest(TestEnum param) {
+    System.out.println(param);
+  }
+
+  enum TestEnum {
+    A, AA, AAA
+  }
+
+  @ParameterizedTest(name = "Stream: {0}")
+  @MethodSource("stringProvider")
+  void testWithExplicitLocalMethodSource(String argument) {
+    assertNotNull(argument);
+  }
+
+  static Stream<String> stringProvider() {
+    return Stream.of("apple", "banana");
+  }
+
+}
