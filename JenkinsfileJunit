@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    triggers {
+            cron('0 0 * * *')
+        }
+
+    stages {
+        stage('checkout') {
+            steps {
+                git branch: 'paweld-junit',
+                url: 'https://gitlab.cindy.t-mobile.pl/WLaskowski1/prepaid-qa.git'
+            }
+        }
+
+        stage('run') {
+            steps {
+                sh "pwd"
+                sh "ls -la"
+                sh "mvn clean test -pl qa-junit"
+            }
+        }
+
+        stage('list') {
+            steps {
+                sh "ls -la ../"
+                sh "ls -la ./"
+                sh "ls -la ./qa-junit"
+                sh "ls -la ./qa-junit/target"
+            }
+        }
+    }
+
+    post {
+        always {
+            allure([
+                includeProperties: false,
+                         jdk: '',
+                         properties: [[key: 'allure.issues.tracker.pattern', value: 'http://tracker.company.com/%s'],
+                         [key: 'allure.tests.management.pattern', value: 'http://tms.company.com/%s'],
+                         ],
+                         reportBuildPolicy: 'ALWAYS',
+                         results: [[path: 'qa-junit/target/allure-results']]
+                ])
+        }
+    }
+}
