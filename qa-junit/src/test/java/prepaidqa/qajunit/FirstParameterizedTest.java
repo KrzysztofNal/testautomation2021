@@ -1,12 +1,18 @@
 package prepaidqa.qajunit;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -49,8 +55,15 @@ public class FirstParameterizedTest {
 
   @DisplayName("Enum test")
   @ParameterizedTest(name = "Enum Param test: {0}")
-  @EnumSource(names = {"A", "AA", "AAA"})
+  @EnumSource(names = {"A", "AAA"})
   public void enumTest(TestEnum param) {
+    System.out.println(param);
+  }
+
+  @DisplayName("Enum test")
+  @ParameterizedTest(name = "Enum Param test: {0}")
+  @EnumSource(value = TestEnum.class)
+  public void enumTest2(TestEnum param) {
     System.out.println(param);
   }
 
@@ -65,7 +78,31 @@ public class FirstParameterizedTest {
   }
 
   static Stream<String> stringProvider() {
-    return Stream.of("apple", "banana");
+    return Stream.of("apple", "banan");
   }
 
+  @ParameterizedTest(name = "List: {0}")
+  @MethodSource("stringProviderList")
+  void testWithExplicitLocalMethodSourceList(String argument) {
+    assertNotNull(argument);
+  }
+
+  static List<String> stringProviderList() {
+    return Arrays.asList("apple", "banan");
+  }
+
+  @ParameterizedTest(name = "Param test with stream as arguments: fruits: {0} , number: {1}, coordinates: {2}.")
+  @MethodSource("stringIntAndListProvider")
+  void testWithMultiArgMethodSource(String str, int num, List<String> list) {
+    assertEquals(5, str.length());
+    assertTrue(num >=1 && num <=2);
+    assertEquals(2, list.size());
+  }
+
+  static Stream<Arguments> stringIntAndListProvider() {
+    return Stream.of(
+        arguments("apple", 1, Arrays.asList("a", "b")),
+        arguments("lemon", 2, Arrays.asList("x", "y"))
+    );
+  }
 }
