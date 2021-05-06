@@ -12,6 +12,7 @@
   <modules>
     <module>java</module>
     <module>qa-junit</module>
+    <module>qa-api</module>
   </modules>
 
   <name>${project.artifactId}</name>
@@ -32,6 +33,7 @@
       https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline
     </allure.cmd.download.url>
     <allure-junit5.version>2.13.9</allure-junit5.version>
+    <rest-assured.version>4.3.3</rest-assured.version>
   </properties>
 
 <dependencyManagement>
@@ -119,6 +121,13 @@
       <artifactId>allure-maven</artifactId>
       <version>2.10.0</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>${rest-assured.version}</version>
+    </dependency>
+
 
   </dependencies>
 </dependencyManagement>
