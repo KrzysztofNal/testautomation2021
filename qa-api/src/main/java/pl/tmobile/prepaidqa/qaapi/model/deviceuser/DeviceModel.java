@@ -1,4 +1,4 @@
-package pl.tmobile.prepaidqa.qaapi.model;
+package pl.tmobile.prepaidqa.qaapi.model.deviceuser;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -8,17 +8,24 @@ import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import pl.tmobile.prepaidqa.qaapi.model.DeviceUser;
-import pl.tmobile.prepaidqa.qaapi.service.DeviceUserService;
-import pl.tmobile.prepaidqa.qaapi.specification.Specification;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import pl.tmobile.prepaidqa.qaapi.model.GenericUser;
+import pl.tmobile.prepaidqa.qaapi.model.deviceuser.DeviceUser;
+import pl.tmobile.prepaidqa.qaapi.model.singleuser.SingleUser;
+import pl.tmobile.prepaidqa.qaapi.service.generic.GenericUserService;
+import pl.tmobile.prepaidqa.qaapi.service.singleuser.SingleUserService;
 
+import java.io.IOException;
 import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.in;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static pl.tmobile.prepaidqa.qaapi.service.DeviceUserService.getDeviceUser;
-import static pl.tmobile.prepaidqa.qaapi.service.DeviceUserService.getDeviceUserResponse;
+import static pl.tmobile.prepaidqa.qaapi.service.deviceuserservice.DeviceUserService.getDeviceUser;
+import static pl.tmobile.prepaidqa.qaapi.service.deviceuserservice.DeviceUserService.getDeviceUserResponse;
 
 @Tag("Api")
 @DisplayName("Api Tests")
@@ -114,5 +121,56 @@ public class ApiTest {
 
         );
 
+    }
+
+    @Test
+    public void singleUserTest() {
+        SingleUser singleUser = SingleUserService.getSingleUser();
+
+        assertThat(singleUser.getName()).isEqualTo("Piotr");
+        assertThat(singleUser.getSurname()).isEqualTo("Kowalski");
+    }
+
+    @Test
+    public void singleGenericTest() throws IOException {
+        GenericUser<Integer> user = GenericUserService.getGenericIntUser();
+
+        assertThat(user.getId()).isEqualTo(1);
+        assertThat(user.getName()).isEqualTo("Piotr");
+        assertThat(user.getSurname()).isEqualTo("Kowalski");
+    }
+
+    @Test
+    public void singleGenericStringTest() throws IOException {
+        GenericUser<String> user = GenericUserService.getGenericStringUser();
+
+        assertThat(user.getId()).isEqualTo("1");
+        assertThat(user.getName()).isEqualTo("Piotr");
+        assertThat(user.getSurname()).isEqualTo("Kowalski");
+    }
+
+    @Test
+    public void singleUserPostTest(TestInfo info) {
+        //given
+        SingleUser singleUser = new SingleUser("Paweł", "Kowalski");
+
+        //when
+        List<SingleUser> singleUsers = SingleUserService.postSingleUser(singleUser);
+
+        System.out.println(info);
+        //then
+        assertThat(singleUsers).isEmpty();
+    }
+
+    @Test
+    public void singleUserWithQueryTest() {
+
+        String[] strings = {"pawel", "dawid"};
+
+        SingleUser singleUser = SingleUserService.getSingleUserQueryParam(strings, "Kowalski");
+
+        assertThat(SingleUserService.getSingleUserQueryParamResponse(strings, "Kowalski").statusCode()).isEqualTo(200);
+        assertThat(singleUser.getName()).isEqualTo("Piotr");
+        assertThat(singleUser.getSurname()).isEqualTo("Kowalski");
     }
 }

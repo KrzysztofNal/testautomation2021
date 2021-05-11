@@ -1,8 +1,8 @@
-package pl.tmobile.prepaidqa.qaapi.service;
+package pl.tmobile.prepaidqa.qaapi.service.deviceuserservice;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import pl.tmobile.prepaidqa.qaapi.model.DeviceUser;
+import pl.tmobile.prepaidqa.qaapi.model.deviceuser.DeviceUser;
 import pl.tmobile.prepaidqa.qaapi.specification.Specification;
 
 import java.util.List;
@@ -27,4 +27,6 @@ public class DeviceUserService {
                 .get(PATH)
                 .andReturn();
     }
+
+
 }
