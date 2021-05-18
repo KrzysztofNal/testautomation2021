@@ -13,6 +13,7 @@
     <module>java</module>
     <module>qa-junit</module>
     <module>qa-api</module>
+      <module>qa-database</module>
   </modules>
 
   <name>${project.artifactId}</name>
