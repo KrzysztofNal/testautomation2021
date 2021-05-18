@@ -3,7 +3,6 @@ package pl.tmobile.prepaidqa.qaapi.azure.service.activities;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import pl.tmobile.prepaidqa.qaapi.azure.model.activities.Activities;
-import pl.tmobile.prepaidqa.qaapi.model.singleuser.SingleUser;
 import pl.tmobile.prepaidqa.qaapi.specification.Specification;
 
 import java.util.HashMap;
@@ -16,7 +15,7 @@ public class ActivitiesService {
     public static Activities getActivitiesById(long id) {
         return getResponseActivitiesById(id)
                 .then()
-//                .log().all()
+                .log().all()
                 .extract()
                 .body()
                 .as(Activities.class);

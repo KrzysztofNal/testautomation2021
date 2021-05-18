@@ -30,7 +30,7 @@ public class Specification {
 //                .addHeader("Authorization", "Bearer " + "authKey")
                 .setContentType(ContentType.JSON)
                 .setBaseUri(ApiConfig.BASE_AZURE_URL)
-                .setBasePath(ApiConfig.BASE_MOCK_PATH)
+                .setBasePath(ApiConfig.BASE_AZURE_PATH)
 //                .addFilter(new RestAssuredRequestFilter())
                 .log(ALL)
                 .setConfig(config)
