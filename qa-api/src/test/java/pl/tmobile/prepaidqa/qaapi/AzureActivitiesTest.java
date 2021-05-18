@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 import static com.google.common.truth.Truth.assertThat;
 
-@Tags({@Tag("Azure"), @Tag("sanity"), @Tag("Activities")})
+@Tags({@Tag("AzureTest"), @Tag("sanity"), @Tag("Activities"), @Tag("Api")})
 @DisplayName("Azure Activities test")
 public class AzureActivitiesTest {
 
@@ -36,6 +36,7 @@ public class AzureActivitiesTest {
 
     }
 
+    @Tag("Azure")
     @ParameterizedTest
     @ValueSource(ints = {1,2,3,4})
     public void azureActivitiesTest(int id) {
