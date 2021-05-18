@@ -14,6 +14,7 @@ public class DeviceUserService {
     public static List<DeviceUser> getDeviceUser() {
         return getDeviceUserResponse()
                 .then()
+                .log().all()
                 .extract()
                 .body()
                 .jsonPath()

@@ -16,6 +16,7 @@ public class SingleUserService {
     public static SingleUser getSingleUser() {
         return getSingleUserResponse()
                 .then()
+                .log().all()
                 .extract()
                 .body()
                 .as(SingleUser.class);
@@ -32,6 +33,7 @@ public class SingleUserService {
     public static List<SingleUser> postSingleUser(SingleUser singleUser) {
         return postSingleUserResponse(singleUser)
                 .then()
+//                .log().all()
                 .extract()
                 .body()
                 .jsonPath()
@@ -57,6 +59,7 @@ public class SingleUserService {
     public static SingleUser getSingleUserQueryParam(String[] name, String surname) {
         return getSingleUserResponse()
                 .then()
+//                .log().all()
                 .extract()
                 .body()
                 .as(SingleUser.class);

@@ -17,6 +17,7 @@ public class GenericUserService {
         return new ObjectMapper().readValue(
                 getGenericUserResponse()
                         .then()
+                        .log().all()
                         .extract()
                         .body()
                         .asInputStream(), new TypeReference<>() {}
@@ -27,6 +28,7 @@ public class GenericUserService {
         return new ObjectMapper().readValue(
                 getGenericUserResponse()
                         .then()
+                        .log().all()
                         .extract()
                         .body()
                         .asInputStream(), new TypeReference<>() {}

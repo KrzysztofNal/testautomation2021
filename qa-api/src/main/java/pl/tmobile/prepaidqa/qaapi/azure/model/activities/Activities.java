@@ -23,4 +23,14 @@ public class Activities {
     public boolean isCompleted() {
         return completed;
     }
+
+    @Override
+    public String toString() {
+        return "Activities{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", dueDate='" + dueDate + '\'' +
+                ", completed=" + completed +
+                '}';
+    }
 }

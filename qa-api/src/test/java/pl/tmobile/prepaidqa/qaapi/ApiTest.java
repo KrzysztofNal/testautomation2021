@@ -2,27 +2,32 @@ package pl.tmobile.prepaidqa.qaapi;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.platform.commons.logging.LoggerFactory;
+import pl.tmobile.prepaidqa.qaapi.config.ApiConfig;
 import pl.tmobile.prepaidqa.qaapi.model.GenericUser;
 import pl.tmobile.prepaidqa.qaapi.model.deviceuser.DeviceUser;
 import pl.tmobile.prepaidqa.qaapi.model.singleuser.SingleUser;
 import pl.tmobile.prepaidqa.qaapi.service.generic.GenericUserService;
 import pl.tmobile.prepaidqa.qaapi.service.singleuser.SingleUserService;
+import pl.tmobile.prepaidqa.qaapi.specification.RestAssuredRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.in;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static pl.tmobile.prepaidqa.qaapi.service.deviceuserservice.DeviceUserService.getDeviceUser;
 import static pl.tmobile.prepaidqa.qaapi.service.deviceuserservice.DeviceUserService.getDeviceUserResponse;
@@ -31,6 +36,26 @@ import static pl.tmobile.prepaidqa.qaapi.service.deviceuserservice.DeviceUserSer
 @DisplayName("Api Tests")
 public class ApiTest {
 
+
+    @BeforeAll
+    public static void beforeAll() {
+        System.out.println("Before All  ===================================");
+    }
+
+    @BeforeEach
+    public void beforeEach() {
+        System.out.println("Before Each  ===================================");
+    }
+
+    @AfterEach
+    public void afterEach() {
+        System.out.println("After Each =============================");
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        System.out.println("After All =============================");
+    }
 
     @Test
     public void firstApiTest() {
@@ -162,9 +187,14 @@ public class ApiTest {
         assertThat(singleUsers).isEmpty();
     }
 
+    private static final Log log = LogFactory.getLog(ApiTest.class);
+
     @Test
     public void singleUserWithQueryTest() {
 
+        log.info("================");
+        log.info("testowe");
+        log.info("================");
         String[] strings = {"pawel", "dawid"};
 
         SingleUser singleUser = SingleUserService.getSingleUserQueryParam(strings, "Kowalski");
@@ -172,5 +202,10 @@ public class ApiTest {
         assertThat(SingleUserService.getSingleUserQueryParamResponse(strings, "Kowalski").statusCode()).isEqualTo(200);
         assertThat(singleUser.getName()).isEqualTo("Piotr");
         assertThat(singleUser.getSurname()).isEqualTo("Kowalski");
+    }
+
+    @Test
+    public void configTest() {
+        System.out.println(ApiConfig.BASE_URL);
     }
 }

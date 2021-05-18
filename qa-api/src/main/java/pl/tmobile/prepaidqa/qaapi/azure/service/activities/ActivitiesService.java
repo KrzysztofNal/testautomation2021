@@ -16,6 +16,7 @@ public class ActivitiesService {
     public static Activities getActivitiesById(long id) {
         return getResponseActivitiesById(id)
                 .then()
+//                .log().all()
                 .extract()
                 .body()
                 .as(Activities.class);
