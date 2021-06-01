@@ -23,6 +23,7 @@ pipeline {
                         message "Choose the environment"
                         parameters {
                             choice(name: 'ENVIRONMENT_2', choices: ['dev', 'local', 'test', 'sit', 'preprod', 'prod'], description: 'Choose environment.')
+                            choice(name: 'TAG', choices: ['Api', 'AzureTest', 'sanity', 'Activities'], description: 'Choose tests by Tag.')
                         }
                     }
             steps {
