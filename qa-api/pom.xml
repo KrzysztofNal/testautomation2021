@@ -80,6 +80,13 @@
             <groupId>com.typesafe</groupId>
             <artifactId>config</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>pl.t-mobile.prepaid</groupId>
+            <artifactId>qa-database</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>
