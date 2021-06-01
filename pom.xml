@@ -14,6 +14,7 @@
     <module>qa-junit</module>
     <module>qa-api</module>
       <module>qa-database</module>
+    <module>qa-gui</module>
   </modules>
 
   <name>${project.artifactId}</name>
