@@ -7,29 +7,31 @@ pipeline {
 
     parameters {
         choice(name: 'ENVIRONMENT', choices: ['dev', 'local', 'test', 'sit', 'preprod', 'prod'], description: 'Choose environment.')
-        choice(name: 'TAG', choices: ['Api', 'AzureTest', 'sanity', 'Activities'], description: 'Choose tests by Tag.')
+        choice(name: 'TAG', choices: ['', 'GuiTest', 'login', 'action', 'simpleaction', 'windows'], description: 'Choose gui tests by Tag.')
+        choice(name: 'EXTAG', choices: ['', 'GuiTest', 'login', 'action', 'simpleaction', 'windows'], description: 'Choose gui tests by Tag.')
+        choice(name: 'CUCUMBER_TAG', choices: ['', '@BDD', '@login', '@userpanel', '@wordpress', '@test', '@website', '@website_2', '@website_3'], description: 'Choose bdd gui tests by Tag.')
+        choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'Choose browser.')
+        choice(name: 'MACHINE', choices: ['remote'], description: 'Choose machine.')
+        string(name: 'REMOTE_URL', defaultValue: 'http://172.30.128.1:4444/wd/hub', description: 'Choose machine.')
     }
 
     stages {
         stage('checkout') {
             steps {
                 git branch: 'paweld-qagui',
-                url: 'https://gitlab.cindy.t-mobile.pl/WLaskowski1/prepaid-qa.git'
+                url: 'https://github.com/testautomation112020/testautomation2021.git'
             }
         }
 
+        stage(build) {
+                sh "mvn clean install -DskipTests"
+        }
+
         stage('run') {
-        input {
-                        message "Choose the environment"
-                        parameters {
-                            choice(name: 'ENVIRONMENT_2', choices: ['dev', 'local', 'test', 'sit', 'preprod', 'prod'], description: 'Choose environment.')
-                            choice(name: 'TAG', choices: ['Api', 'AzureTest', 'sanity', 'Activities'], description: 'Choose tests by Tag.')
-                        }
-                    }
             steps {
                 sh "pwd"
                 sh "ls -la"
-                sh "mvn clean test -pl qa-api -DENVIRONMENT=${ENVIRONMENT_2} -Dgroups=${params.TAG}"
+                sh "mvn clean test -pl qa-gui -DENVIRONMENT=${ENVIRONMENT} -Dgroups=${params.TAG}" -DexcludedGroups=${params.TAG}" -Dcucumber.filter.tags=\"${params.CUCUMBER_TAG}\" -DBROWSER=${params.BROWSER} -DMACHINE=${params.MACHINE} -DREMOTE_URL=${params.REMOTE_URL}
             }
         }
 
@@ -52,8 +54,9 @@ pipeline {
                          [key: 'allure.tests.management.pattern', value: 'http://tms.company.com/%s'],
                          ],
                          reportBuildPolicy: 'ALWAYS',
-                         results: [[path: 'qa-api/target/allure-results']]
+                         results: [[path: 'qa-gui/target/allure-results']]
                 ])
+            cucumber buildStatus: 'UNSTABLE', failedFeaturesNumber: -1, failedScenariosNumber: -1, failedStepsNumber: -1, fileIncludePattern: '**/*cucumber.json', jsonReportDirectory: 'qa-gui/target/', pendingStepsNumber: -1, skippedStepsNumber: -1, sortingMethod: 'ALPHABETICAL', undefinedStepsNumber: -1
         }
     }
 }
