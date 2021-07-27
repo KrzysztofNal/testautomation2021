@@ -10,6 +10,8 @@ public class GuiConfig {
     private static final Config ENV = CONFIG.getConfig("environments").getConfig(ENVIRONMENT);
 
     public static final String BROWSER = CONFIG.getString("browser");
+    public static final String MACHINE = CONFIG.getString("machine");
+    public static final String SELENIUM_HUB_URL = CONFIG.getString("seleniumHubUrl");
 
     public static final String BASE_WORDPRESS_URL = ENV.getString("baseWordpressUrl");
     public static final String BASE_DIARY_URL = ENV.getString("diaryBasePage");

@@ -15,7 +15,7 @@ Feature: Parameter tests
 
   @website_3
   Scenario Outline: Check title of the website
-    Given Name of the website is <website>
+    Given Name of the website is <websi
     Then Title of this website is <title>
 
     Examples:
