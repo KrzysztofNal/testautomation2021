@@ -33,7 +33,7 @@ pipeline {
             steps {
                 sh "pwd"
                 sh "ls -la"
-                sh "mvn clean test -pl qa-gui -DENVIRONMENT=${ENVIRONMENT} -Dgroups=${params.TAG} -DexcludedGroups=${params.TAG} -Dcucumber.filter.tags=\"${params.CUCUMBER_TAG}\" -DBROWSER=${params.BROWSER} -DMACHINE=${params.MACHINE} -DREMOTE_URL=${params.REMOTE_URL}"
+                sh "mvn clean test -pl qa-gui -DENVIRONMENT=${ENVIRONMENT} -Dgroups=${params.TAG} -DexcludedGroups=${params.EXTAG} -Dcucumber.filter.tags=\"${params.CUCUMBER_TAG}\" -DBROWSER=${params.BROWSER} -DMACHINE=${params.MACHINE} -DREMOTE_URL=${params.REMOTE_URL}"
             }
         }
 
